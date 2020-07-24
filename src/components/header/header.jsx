@@ -74,14 +74,14 @@ class Header extends React.Component {
 							
 							
 								<li className="d-none d-md-block">
-								<Link to="/register/" className="btn btn-success">
+								<Link  style ={{  backgroundColor :'white'}} to="/register/" className="btn btn-success">
 						 Register
 					</Link>
 
 								</li> 
 						
 								<li className="d-none d-md-block">
-								<Link to="/form/elements" className="btn btn-success">
+								<Link  style ={{  backgroundColor :'white'}} to="/form/elements" className="btn btn-success">
 						 Create Camp
 					</Link>
 

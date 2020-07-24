@@ -118,11 +118,21 @@ class Register extends React.Component {
 									onChange = {(event) => this.setState({email:event.target.value})}/>
 								</div>
 							</div>
+
 							<label className="control-label">User Name <span className="text-danger">*</span></label>
 							<div className="row m-b-15">
 								<div className="col-md-12">
 									<input type="text" className="form-control" placeholder="User Name" required 
 									onChange = {(event) => this.setState({user_name:event.target.value})}/>
+								</div>
+							</div>
+
+
+							<label className="control-label">Password <span className="text-danger">*</span></label>
+							<div className="row m-b-15">
+								<div className="col-md-12">
+									<input type="password" className="form-control" placeholder="Password" required 
+									onChange = {(event) => this.setState({password:event.target.value})}/>
 								</div>
 							</div>
 							<label className="control-label">Phone Number <span className="text-danger">*</span></label>
