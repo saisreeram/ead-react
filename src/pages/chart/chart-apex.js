@@ -13,6 +13,10 @@ this.state = {
 	i:0,
 	checking:'',
 	redirectToReferrer: false,
+	data:[],
+	data1:'',
+	datatn:'',
+	isLoading:false,
 	columnChart1: {
 
 		options: {
@@ -41,7 +45,7 @@ this.state = {
 			},
 			colors: ['#2d353c', '#8753de', '#b6c2c9'],
 			xaxis: {
-				categories: ['Respiratory', 'Diabetes', 'Malaria', 'Diarrheal', 'visionary problems'],
+				categories: ['Respiratory', 'Orthopedic', 'Diabetes', 'BP', 'Heart ','others'],
 				axisBorder: {
 					show: true,
 					color: 'rgba(182, 194, 201, 0.5)',
@@ -77,13 +81,7 @@ this.state = {
 		},
 		series: [{
 			name: 'Children',
-			data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
-		}, {
-			name: 'Below 60',
-			data: [100, 100, 100, 100, 100, 100, 100, 100, 100]
-		}, {
-			name: 'Above 60',
-			data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+			data: [44, 55, 57, 56, 61,56]
 		}]
 	},
 	columnChart2: {
@@ -114,7 +112,7 @@ this.state = {
 			},
 			colors: ['#2d353c', '#8753de', '#b6c2c9'],
 			xaxis: {
-				categories:  ['Respiratory', 'Diabetes', 'Malaria', 'Diarrheal', 'visionary problems'],
+				categories: ['Respiratory', 'Orthopedic', 'Diabetes', 'BP', 'Heart ','others'],
 				axisBorder: {
 					show: true,
 					color: 'rgba(182, 194, 201, 0.5)',
@@ -187,7 +185,7 @@ this.state = {
 					},
 					colors: ['#2d353c', '#8753de', '#b6c2c9'],
 					xaxis: {
-						categories:  ['Respiratory', 'Diabetes', 'Malaria', 'Diarrheal', 'visionary problems'],
+						categories: ['Respiratory', 'Orthopedic', 'Diabetes', 'BP', 'Heart ','others'],
 						axisBorder: {
 							show: true,
 							color: 'rgba(182, 194, 201, 0.5)',
@@ -223,57 +221,204 @@ this.state = {
 				},
 				series: [{
 					name: 'Children',
-					data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
-				}, {
-					name: 'Below 60',
-					data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
-				}, {
-					name: 'Above 60',
-					data: [100, 100, 100, 100, 100, 100, 100, 100, 100]
+					data: [35, 41, 36, 26, 45, 48]
+				}]
+			},
+			columnChart4: {
+
+				options: {
+					chart: {
+						height: 350,
+						type: 'bar'
+					},
+					title: {
+						text: 'Profit & Margin Chart',
+						align: 'center'
+					},
+					plotOptions: {
+						bar: {
+							horizontal: false,
+							columnWidth: '55%',
+							endingShape: 'rounded'	
+						},
+					},
+					dataLabels: {
+						enabled: false
+					},
+					stroke: {
+						show: true,
+						width: 2,
+						colors: ['transparent']
+					},
+					colors: ['#2d353c', '#8753de', '#b6c2c9'],
+					xaxis: {
+						categories: ['Respiratory', 'Orthopedic', 'Diabetes', 'BP', 'Heart ','others'],
+						axisBorder: {
+							show: true,
+							color: 'rgba(182, 194, 201, 0.5)',
+							height: 1,
+							width: '100%',
+							offsetX: 0,
+							offsetY: -1
+						},
+						axisTicks: {
+							show: true,
+							borderType: 'solid',
+							color: '#b6c2c9',
+							height: 6,
+							offsetX: 0,
+							offsetY: 0
+						}
+					},
+					yaxis: {
+						title: {
+							text: '$ (thousands)'
+						}
+					},
+					fill: {
+						opacity: 1
+					},
+					tooltip: {
+						y: {
+							formatter: function (val) {
+								return "$ " + val + " thousands"
+							}
+						}
+					}
+				},
+				series: [{
+					name: 'People',
+					data: [30, 70, 100, 100, 70, 30]
 				}]
 			}
 		}
 	    this.change = this.change.bind(this);
 
 	}
-	
-	goto=(a)=>{
-		console.log(a)
 
+	
+
+
+	componentDidMount(){
+		this.fetchData();
+		this.fetchDatath();
+		console.log(this.state.data)
+
+	}
+
+	fetchData(){
+			fetch('https://v2zpmsrmkd.execute-api.us-east-1.amazonaws.com/test', {
+				method: 'POST',
+				 
+				  body: JSON.stringify({state: "Andhra Pradesh"})
+
+			  })
+			.then(response => response.json())
+			.then(data => this.setState({ data: data.body,isLoading:true }))
+			
+
+
+	}
+
+
+
+	fetchDatath(){
+		fetch('https://v2zpmsrmkd.execute-api.us-east-1.amazonaws.com/test', {
+			method: 'POST',
+			 
+			  body: JSON.stringify({state: "Telangana"})
+
+		  })
+		.then(response => response.json())
+		.then(data => this.setState({ datatn: data.body,isLoading:true }))
+		
+
+
+}
+	
+
+	goto=(a)=>{
+
+		console.log(a)
+		if (this.state.isLoading==true){
+		var k=this.state.data
+		console.log(k['count'])}
+		
 		this.setState({redirectToReferrer: true,checking:a});
 
 	}
 	
 	
 	change=(id,e)=> {
+		console.log(this.state.i)
+		// for (var i = k.length - 1; i >= 0; i--) {
+		// 	if (k[i]['orgname'] == id)
+		// 	this.setState({data1:k[i]})
+
+		// 	console.log(k[i])
+		//   }
 		e.target.style.strokeOpacity = '1';
 		e.target.style.fill="rgb(255, 0, 0)";
-		this.setState({view:id});
-		// this.setState({columnChart1.options});
+
+		if (this.state.isLoading==true){
+			if (id=="Andhra Pradesh"){
+			this.setState({i:1})
+				var k=this.state.data
+			
+		
+			// else if (id=="Telangana"){
+			// 	var k=this.state.datath
+			//this.setState({i:2});}
+		console.log(id)
+		
 		var temp=this.state.columnChart1
 		temp['options']['title']['text']=id
-
-		var temp2=this.state.columnChart2
-		temp2['options']['title']['text']=id
+		temp['series'][0]['data'][0]=k['count']['lung']
+		temp['series'][0]['data'][1]=k['count']['ortho']
+		temp['series'][0]['data'][5]=k['count']['other']
+		temp['series'][0]['data'][3]=k['count']['bp']
+		temp['series'][0]['data'][4]=k['count']['heart']
+		temp['series'][0]['data'][2]=k['count']['diabetes']
 		
-		var temp3=this.state.columnChart3
-		temp3['options']['title']['text']=id
-		
+			
 		this.setState({columnChart1:temp});
-		this.setState({columnChart2:temp2});
-		this.setState({columnChart3:temp3});
+		this.setState({columnChart2:temp})
+		this.setState({view:id});}
 
-		if(this.state.i==0){
+		else{
+		var temp=this.state.columnChart3
+		var temp2=this.state.columnChart4
+		temp['options']['title']['text']=id
 
-		this.setState({i:1});}
-
-		else if(this.state.i==1){
-		this.setState({i:2});}
-
-		else if (this.state.i==2){
-		this.setState({i:3});}	
+		temp2['options']['title']['text']=id
+		this.setState({columnChart3:temp});
+		this.setState({columnChart4:temp2});
+		if (this.state.i==3)
+		this.setState({i:4})
 		else
-			this.setState({i:1})
+		this.setState({i:3})
+
+	}
+		// // this.setState({columnChart1.options});
+		// var temp=this.state.columnChart1
+		// temp['options']['title']['text']=id
+
+		// var temp2=this.state.columnChart2
+		// temp2['options']['title']['text']=id
+		
+		// var temp3=this.state.columnChart3
+		// temp3['options']['title']['text']=id
+		
+		// this.setState({columnChart1:temp});
+		// this.setState({columnChart2:temp2});
+		// this.setState({columnChart3:temp3});
+
+
+		// else if (this.state.i==2){
+		// this.setState({i:3});}	
+		
+		
+		}
 	  }
 	
 	  change1=(e)=> {
@@ -434,9 +579,17 @@ strokeWidth="1.8" strokeOpacity="0" fill="rgb(232, 241, 250)" stroke="rgb(0, 123
 :null}				
 					
 
-					{this.state.i == 3?  					<div className="col-6" >
+
+
+		{this.state.i == 3?  					<div className="col-6" >
 
 <Chart type="bar" options={this.state.columnChart3.options} series={this.state.columnChart3.series} />
+
+</div>
+:null}				
+		{this.state.i == 4?  					<div className="col-6" >
+
+<Chart type="bar" options={this.state.columnChart4.options} series={this.state.columnChart4.series} />
 
 </div>
 :null}				
